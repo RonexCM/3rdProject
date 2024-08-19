@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction System</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="validation.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>House Price Prediction System</h1>
+        <nav>
+            <ul>
+                <li><a href="Index.Html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="auth-form">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <label for="signupName">Name:</label>
+            <input type="text" id="signupName" name="signupName" required>
+            
+            <label for="signupEmail">Email:</label>
+            <input type="email" id="signupEmail" name="signupEmail" required>
+            
+            <label for="signupPassword">Password:</label>
+            <input type="password" id="signupPassword" name="signupPassword" required>
+            
+            <label for="signupConfirmPassword">Confirm Password:</label>
+            <input type="password" id="signupConfirmPassword" name="signupConfirmPassword" required>
+            
+            <button type="submit">Sign Up</button>
+            <p id="signupError" class="error"></p>
+        </form>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
