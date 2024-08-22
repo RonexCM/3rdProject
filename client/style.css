@@ -132,6 +132,7 @@ footer {
     }
 } */
 
+
 body, h1, h2, p, form {
     margin: 0;
     padding: 0;
@@ -145,38 +146,38 @@ body {
 }
 
 header {
-    background: #5e656b; 
+    background-color: #5e656b;
     color: #fff;
-    padding: 20px 0;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    margin-bottom: 10px;
-    font-size: 24px;
+    margin: 0;
+    font-size: 2em;
 }
 
-header nav ul {
-    list-style: none;
+/* Navigation Styles */
+nav ul {
+    list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: right;
+    gap: 20px;
 }
 
-header nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-header nav ul li a {
+nav a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
+    padding: 10px 15px;
+    display: block;
 }
 
 header nav ul li a:hover {
     color: rgb(127, 197, 255);
-    text-decoration: underline;
 }
+
 
 .container {
     max-width: 900px;
@@ -251,6 +252,9 @@ form .result h2 {
 }
 
 /* Home Section Styles */
+html {
+    scroll-behavior: smooth;
+}
 .home {
     max-width: 900px;
     margin: 20px auto;
@@ -258,7 +262,7 @@ form .result h2 {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .home .content {
@@ -281,6 +285,65 @@ form .result h2 {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.about {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.about .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.about p {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.about img {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+}
+
+.contact .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.contact p {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.contact img {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 /* Footer Styles */
 footer {
     background: #5e656b;

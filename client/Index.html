@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,6 +60,95 @@
             <img src="Image\House.jpg" alt="House Image">
         </div>
     </div>
+    
+    <footer>
+        <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
+    </footer>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>House Price Prediction System</h1>
+        <nav>
+            <ul>
+                <!-- <li><a href="#">Home</a></li> -->
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Predict the Price</h2>
+       
+<form class="form">
+	<h2>Area (Square Feet)</h2>
+    <input class="area"  type="text" id="uiSqft" class="floatLabel" name="Squareft" placeholder="Enter the Area in SqFoot">
+    
+	<h2>BHK</h2>
+	<input class="area"  type="text" id="uiBHK" class="floatLabel" name="uiBHK" placeholder="Enter the BHK">
+
+	<h2>Bath</h2>
+	<input class="area"  type="text" id="uiBathrooms" class="floatLabel" name="uiBathrooms" placeholder="Enter the no. of Bathrooms">
+
+	<h2>Balcony</h2>
+	<input class="area"  type="text" id="uiBalcony" class="floatLabel" name="uiBalcony" placeholder="Enter the no. of Balcony">
+		<h2>Location</h2>
+
+  <select class="location" name="" id="uiLocations">
+    <option value="" disabled="disabled" selected="selected">Choose a Location</option>
+		<option>Electronic City</option>
+        <option>Rajaji Nagar</option>
+  </select>
+
+	<button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
+	<div id="uiEstimatedPrice" class="result">
+        <h2></h2>	 
+    </div>
+</form>
+    </div> 
+
+        <div class="home" id="home">
+            <h2>Home</h2>
+            <div class="content">
+                <p>Welcome to the House Price Prediction System.<br>
+                This is your go-to solution for predicting house prices. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat consectetur aperiam possimus adipisci alias quisquam, molestias doloribus inventore magnam dolorem consequuntur ipsam saepe delectus magni, voluptates ratione facilis expedita temporibus.</p>
+                <img src="Image/House.jpg" alt="House Image">
+            </div>
+        </div>
+    </div>
+
+ 
+<div class="about" id="about">
+    <h2>About</h2>
+    <div class="content">
+        <p>Welcome to the House Price Prediction System.<br>
+        This is your go-to solution for predicting house prices. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat consectetur aperiam possimus adipisci alias quisquam, molestias doloribus inventore magnam dolorem consequuntur ipsam saepe delectus magni, voluptates ratione facilis expedita temporibus.</p>
+        <img src="Image/House.jpg" alt="House Image">
+    </div>
+</div>
+
+<div class="contact" id="contact">
+    <h2>Contact</h2>
+    <div class="content">
+        <p>Welcome to the House Price Prediction System.<br>
+        This is your go-to solution for predicting house prices. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat consectetur aperiam possimus adipisci alias quisquam, molestias doloribus inventore magnam dolorem consequuntur ipsam saepe delectus magni, voluptates ratione facilis expedita temporibus.</p>
+        <img src="Image/House.jpg" alt="House Image">
+    </div>
+</div>
     
     <footer>
         <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
