@@ -13,14 +13,22 @@ def get_location_names():
     
 @app.route('/predict_home_price',methods=['POST'])
 def predict_home_price():
-    total_sqft = float(request.form['total_sqft'])
+    # total_sqft = float(request.form['total_sqft'])
+    # location = request.form['location']
+    # bhk = int(request.form['bhk'])
+    # bath = int(request.form['bath'])
+    # balcony = int(request.form['balcony'])
+    aana = float(request.form['aana'])
     location = request.form['location']
-    bhk = int(request.form['bhk'])
-    bath = int(request.form['bath'])
-    balcony = int(request.form['balcony'])
-    
+    bedroom = int(request.form['bedroom'])
+    bathroom = int(request.form['bath'])
+    floors = int(request.form['floor'])
+    parking = int(request.form['parking'])
+    road = float(request.form['road'])
+    print(aana,location,bedroom,floors,parking,road)
     response = jsonify({
-        'estimated_price': util.get_estimated_price(location,total_sqft, bhk, bath,balcony)
+        # 'estimated_price': util.get_estimated_price(location,total_sqft, bhk, bath,balcony)
+        'estimated_price': util.get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road)
     })
     response.headers.add('Access-Control-Allow-Origin','*')
     

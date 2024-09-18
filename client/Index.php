@@ -33,31 +33,49 @@ session_start()
     <div class="container">
         <h2>Predict the Price</h2>
        
-<form class="form">
-	<h2>Area (Square Feet)</h2>
-    <input class="area"  type="text" id="uiSqft" class="floatLabel" name="Squareft" placeholder="Enter the Area in SqFoot">
+
+        <!-- aana = float(request.form['aana'])
+    location = request.form['location']
+    bedroom = int(request.form['bedroom'])
+    bathroom = int(request.form['bathroom'])
+    floors = int(request.form['floors'])
+    parking = int(request.form['parking'])
+    road = float(request.form['road']) -->
+    <form class="form">
+        <h2>Area (Aana)</h2>
+        <input class="area" type="text" id="uiAana" class="floatLabel" name="Aana" placeholder="Enter the Area in Aana">
+        
+        <h2>Bedroom</h2>
+        <input class="area" type="text" id="uiBedroom" class="floatLabel" name="BHK" placeholder="Enter the BHK">
     
-	<h2>BHK</h2>
-	<input class="area"  type="text" id="uiBHK" class="floatLabel" name="uiBHK" placeholder="Enter the BHK">
-
-	<h2>Bath</h2>
-	<input class="area"  type="text" id="uiBathrooms" class="floatLabel" name="uiBathrooms" placeholder="Enter the no. of Bathrooms">
-
-	<h2>Balcony</h2>
-	<input class="area"  type="text" id="uiBalcony" class="floatLabel" name="uiBalcony" placeholder="Enter the no. of Balcony">
-		<h2>Location</h2>
-
-  <select class="location" name="" id="uiLocations">
-    <option value="" disabled="disabled" selected="selected">Choose a Location</option>
-		<option>Electronic City</option>
-        <option>Rajaji Nagar</option>
-  </select>
-
-	<button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
-	<div id="uiEstimatedPrice" class="result">
-        <h2></h2>	 
-    </div>
-</form>
+        <h2>Bathrooms</h2>
+        <input class="area" type="text" id="uiBathrooms" class="floatLabel" name="Bathrooms" placeholder="Enter the number of Bathrooms">
+    
+        <h2>Floors</h2>
+        <input class="area" type="text" id="uiFloors" class="floatLabel" name="Floors" placeholder="Enter the number of Floors">
+    
+        <h2>Parking</h2>
+        <input class="area" type="text" id="uiParking" class="floatLabel" name="Parking" placeholder="Enter the number of Parking spaces">
+    
+        <h2>Road Width (Feet)</h2>
+        <input class="area" type="text" id="uiRoad" class="floatLabel" name="Road" placeholder="Enter the Road Width">
+    
+        <h2>Location</h2>
+        <select class="location" id="uiLocations">
+            <option value="" disabled="disabled" selected="selected">Choose a Location</option>
+            <option>Electronic City</option>
+            <option>Rajaji Nagar</option>
+            <option>Jhamshikhel</option>
+            <option>Baneshwor</option>
+            <option>Others</option>
+        </select>
+    
+        <button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
+    
+        <div id="uiEstimatedPrice" class="result">
+            <h2></h2>  
+        </div>
+    </form>
     </div> 
 
         <div class="home" id="home">
