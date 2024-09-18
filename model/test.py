@@ -132,25 +132,80 @@ X = np.c_[np.ones(X.shape[0]), X]  # Add a column of ones to X for the intercept
 # Compute theta using the closed-form solution
 try:
     theta = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
-    print(theta)
+    print(len(theta))
 except np.linalg.LinAlgError as e:
     print("Error in computing theta:", e)
 
 # Create a mapping for address encoding
+
+model = LinearRegression()
+model.fit(X, y)
+library_theta = np.append(model.intercept_, model.coef_)
+print("Library Theta (with intercept):", library_theta)
+
+# Compare with your theta
+print("Hardcoded Theta:", theta)
 address_columns = [col for col in df11.columns if col.startswith('Address_')]
 address_mapping = {col.replace('Address_', ''): col for col in address_columns}
 
-import pickle
+# Define a function to prepare the new data
+def prepare_feature_vector(new_data):
+    feature_vector = []
+    # Add numeric features
+    for col in df11.columns:
+        if col != 'Price' and col != 'Address':
+            feature_vector.append(new_data.get(col, 0))
+        elif col.startswith('Address_'):
+            feature_vector.append(new_data.get(col, 0))
+    
+    # Add intercept term
+    feature_vector = np.insert(feature_vector, 0, 1)
+    return np.array(feature_vector)
 
-# Data to be saved in the pickle file
-model_data = {
-    'theta': theta,  # Model parameters
-    'columns': [col.lower() for col in df11.columns],  # Feature columns used in the model
-    'address_mapping': address_mapping  # Mapping of addresses for one-hot encoding
+# Example of new data
+new_data = {
+    'Bedroom': 6,
+    'Bathroom': 6,
+    'Floors': 3,
+    'Parking': 2,
+    'Aana': 7,  # Ensure this matches your cleaned data
+    'Road': 16,
 }
 
-# Save the data into a pickle file
-with open('server/artifacts/house_price_model.pkl', 'wb') as f:
-    pickle.dump(model_data, f)
+# Example address
+new_address = 'others'
 
-print("Model saved to pickle file.")
+# Add one-hot encoding for the address dynamically
+address_cols = [col for col in df11.columns if col.startswith('Address_')]
+for col in address_cols:
+    if col.replace('Address_', '') == new_address:
+        new_data[col] = 1
+    else:
+        new_data[col] = 0
+
+# Prepare feature vector
+feature_vector = prepare_feature_vector(new_data)
+print(len(feature_vector))
+# Define a predict function
+def predict(features):
+    return features.dot(theta)
+
+# Make the prediction
+predicted_price = predict(feature_vector)
+print("Predicted price:", predicted_price)
+
+model = LinearRegression(fit_intercept=True)
+model.fit(X, y)
+
+# Get coefficients and intercept
+library_theta = np.append(model.intercept_, model.coef_)
+print("Library Theta (with intercept):", library_theta)
+
+
+print("Deature Theta (with intercept):", feature_vector)
+# Predict with library model
+library_predictions = model.predict([feature_vector])
+
+print(df11.shape)
+print("Library Predictions:", library_predictions)  # First 5 predictions
+# print("Hardcoded Predictions:", hardcoded_predictions)  # First 5 predictions
