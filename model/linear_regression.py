@@ -61,45 +61,45 @@ print(len(location_stats[location_stats <= 5]))
 location_stats_less_than_5 = location_stats[location_stats <= 5]
 df5['Address'] = df5['Address'].apply(lambda x: 'others' if x in location_stats_less_than_5 else x)
 
-def remove_pps_outliers(df):
-    df_out = pd.DataFrame()
-    for key, subdf in df.groupby('Address'):
-        m = np.mean(subdf.price_per_aana)
-        st = np.std(subdf.price_per_aana)
-        reduced_df = subdf[(subdf.price_per_aana > (m - st)) & (subdf.price_per_aana <= (m + st))]
-        df_out = pd.concat([df_out, reduced_df], ignore_index=True)
-    return df_out
+# def remove_pps_outliers(df):
+#     df_out = pd.DataFrame()
+#     for key, subdf in df.groupby('Address'):
+#         m = np.mean(subdf.price_per_aana)
+#         st = np.std(subdf.price_per_aana)
+#         reduced_df = subdf[(subdf.price_per_aana > (m - st)) & (subdf.price_per_aana <= (m + st))]
+#         df_out = pd.concat([df_out, reduced_df], ignore_index=True)
+#     return df_out
 
-df6 = remove_pps_outliers(df5)
-print(df6.shape)
+# df6 = remove_pps_outliers(df5)
+# print(df6.shape)
 
-def remove_bhk_outliers(df):
-    exclude_indices = np.array([])
+# def remove_bhk_outliers(df):
+#     exclude_indices = np.array([])
 
-    for location, location_df in df.groupby('Address'):
-        aana_stats = {}
+#     for location, location_df in df.groupby('Address'):
+#         aana_stats = {}
         
-        # First loop to calculate statistics for each aana
-        for aana, aana_df in location_df.groupby('Aana'):
-            aana_stats[aana] = {
-                'mean': np.mean(aana_df.price_per_aana),
-                'std': np.std(aana_df.price_per_aana),
-                'count': aana_df.shape[0]
-            }
+#         # First loop to calculate statistics for each aana
+#         for aana, aana_df in location_df.groupby('Aana'):
+#             aana_stats[aana] = {
+#                 'mean': np.mean(aana_df.price_per_aana),
+#                 'std': np.std(aana_df.price_per_aana),
+#                 'count': aana_df.shape[0]
+#             }
         
-        # Second loop to compare each aana with the previous aana
-        for aana, aana_df in location_df.groupby('Aana'):
-            stats = aana_stats.get(aana - 1)
-            if stats and stats['count'] > 5:
-                # Filter out outliers based on the mean of the previous aana
-                exclude_indices = np.append(exclude_indices, aana_df[aana_df.price_per_aana < stats['mean']].index.values)
+#         # Second loop to compare each aana with the previous aana
+#         for aana, aana_df in location_df.groupby('Aana'):
+#             stats = aana_stats.get(aana - 1)
+#             if stats and stats['count'] > 5:
+#                 # Filter out outliers based on the mean of the previous aana
+#                 exclude_indices = np.append(exclude_indices, aana_df[aana_df.price_per_aana < stats['mean']].index.values)
     
-    # Drop the outlier rows from the DataFrame
-    return df.drop(exclude_indices, axis='index')
+#     # Drop the outlier rows from the DataFrame
+#     return df.drop(exclude_indices, axis='index')
 
-# Apply the function to the DataFrame
-df8 = remove_bhk_outliers(df6)
-df8 = df8.drop(columns=['price_per_aana'])
+# # Apply the function to the DataFrame
+# df8 = remove_bhk_outliers(df6)
+df8 = df5.drop(columns=['price_per_aana'])
 
 # Create dummy variables for the Address column
 df11 = pd.get_dummies(df8, columns=['Address'], drop_first=True)
