@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import json
+from sklearn.linear_model import LinearRegression
 # Load the dataset
 df = pd.read_csv('model/nepali_dataset.csv')
 
@@ -103,9 +104,11 @@ df8 = df5.drop(columns=['price_per_aana'])
 
 # Create dummy variables for the Address column
 df11 = pd.get_dummies(df8, columns=['Address'], drop_first=True)
+df11 = df11[df11['Price'] < df11['Price'].quantile(0.95)]
 
 # Split into features and target
 X = df11.drop('Price', axis=1)
+
 y = df11['Price']
 
 
@@ -136,7 +139,6 @@ except np.linalg.LinAlgError as e:
 # Create a mapping for address encoding
 address_columns = [col for col in df11.columns if col.startswith('Address_')]
 address_mapping = {col.replace('Address_', ''): col for col in address_columns}
-
 
 import pickle
 

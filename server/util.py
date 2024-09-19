@@ -45,21 +45,21 @@ def predict(features):
 def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road):
     # Prepare new_data dictionary with all features
     new_data = {
-        'aana': aana,
         'bedroom': bedroom,
         'bathroom': bathroom,
         'floors': floors,
         'parking': parking,
+        'aana': aana,
         'road': road
     }
     
     # Add one-hot encoding for the address dynamically
-    for col in __data_columns:
-        if col.startswith('address_'):
-            if col.replace('address_', '') == location.lower():
-                new_data[col] = 1
-            else:
-                new_data[col] = 0
+    address_cols = [col for col in __data_columns if col.startswith('address_')]
+    for col in address_cols:
+        if col.replace('address_', '') == location.lower():
+            new_data[col] = 1
+        else:
+            new_data[col] = 0
 
     # Prepare feature vector for the model
     feature_vector = prepare_feature_vector(new_data)
