@@ -56,7 +56,7 @@ def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road
     # Add one-hot encoding for the address dynamically
     address_cols = [col for col in __data_columns if col.startswith('address_')]
     for col in address_cols:
-        if col.replace('Address_', '') == location.lower():
+        if col.replace('address_', '') == location.lower():
             new_data[col] = 1
         else:
             new_data[col] = 0
