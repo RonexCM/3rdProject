@@ -130,7 +130,11 @@
             <option>Baneshwor</option>
             <option>Others</option>
         </select>
-    
+        <label>Select Model:</label><br>
+        <input type="radio" id="linear" name="model_type" value="linear" checked>
+        <label for="linear">Linear Regression</label><br>
+        <input type="radio" id="lasso" name="model_type" value="lasso">
+        <label for="lasso">Lasso Regression</label><br><br>
         <button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
     
         <div id="uiEstimatedPrice" class="result">
