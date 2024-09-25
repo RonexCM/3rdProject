@@ -42,7 +42,7 @@ def predict(features):
     return features.dot(__theta)
 
 # Function to estimate the house price
-def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road):
+def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road,model_type):
     # Prepare new_data dictionary with all features
     new_data = {
         'bedroom': bedroom,
@@ -52,7 +52,6 @@ def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road
         'aana': aana,
         'road': road
     }
-    
     # Add one-hot encoding for the address dynamically
     address_cols = [col for col in __data_columns if col.startswith('address_')]
     for col in address_cols:
@@ -65,19 +64,25 @@ def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road
     feature_vector = prepare_feature_vector(new_data)
 
     # Make a prediction using the loaded model (theta)
-    return round(predict(feature_vector), 2)
+    if(model_type == "lasso"):
+        feature_vector = feature_vector.reshape(1, -1)
+        return round(__lasso.predict(feature_vector)[0], 2)
+    else:
+        return round(predict(feature_vector), 2)
 
 def load_saved_artifacts():
     global __theta
     global __data_columns
     global __model
     global __locations
+    global __lasso
     print("Loading saved artifacts...start")
     
     # Load the model from the pickle file
     with open('./artifacts/house_price_model.pkl', 'rb') as f:
         model_data = pickle.load(f)
         __theta = model_data['theta']
+        __lasso = model_data['lasso']
         __data_columns = model_data['columns']
         # __data_columns = json.load(f)['data_columns']
         __locations = [col.replace('address_', '') for col in __data_columns if col.startswith('address_')]

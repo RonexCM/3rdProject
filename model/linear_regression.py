@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 import pickle
 import json
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Lasso
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 # Load the dataset
 df = pd.read_csv('model/nepali_dataset.csv')
 
@@ -122,8 +124,11 @@ with open("columns.json","w") as f:
 X = X.astype(float)
 y = y.astype(float)
 
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
 # Convert to numpy arrays
-X = np.array(X)
+X = np.array(X_scaled)
 y = np.array(y)
 
 # Add intercept term to the feature matrix
@@ -140,11 +145,21 @@ except np.linalg.LinAlgError as e:
 address_columns = [col for col in df11.columns if col.startswith('Address_')]
 address_mapping = {col.replace('Address_', ''): col for col in address_columns}
 
+
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Implement Lasso Regression
+lasso_model = Lasso()  # You can tune the 'alpha' parameter as needed
+lasso_model.fit(X_train, y_train)
+
 import pickle
 
 # Data to be saved in the pickle file
 model_data = {
     'theta': theta,  # Model parameters
+    'lasso': lasso_model,
     'columns': [col.lower() for col in df11.columns],  # Feature columns used in the model
     'address_mapping': address_mapping  # Mapping of addresses for one-hot encoding
 }
