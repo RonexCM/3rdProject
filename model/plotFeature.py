@@ -1,11 +1,8 @@
 import pandas as pd
 import numpy as np
 import re
-import pickle
-import json
-from sklearn.linear_model import Lasso
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 
 df = pd.read_csv('model/Nepali_house_dataset.csv')
 
@@ -142,69 +139,33 @@ df8 = df8.drop(columns=['price_per_aana'])
 df9 = pd.get_dummies(df8, columns=['LOCATION'], drop_first=True)
 df9 = df9[df9['PRICE'] < df9['PRICE'].quantile(0.95)]
 
-X = df9.drop('PRICE', axis=1)
+def plotFeature(feature):
+    # Select the feature column and the target variable
+    X = df9[[feature]]  # Use double brackets to keep it as a DataFrame
+    y = df9['PRICE']
 
-y = df9['PRICE']
+    # Fit a linear regression model
+    model = LinearRegression()
+    model.fit(X, y)  # No need to reshape, already in the right shape
 
-columns = {
-    'data-columns' : [col.lower() for col in X.columns]
-}
-with open("columns.json","w") as f:
-    f.write(json.dumps(columns))
-    
-X = X.astype(float)
-y = y.astype(float)
+    # Predict y values based on the model
+    y_pred = model.predict(X)
 
-# Convert to numpy arrays
-X = np.array(X)
-y = np.array(y)
+    # Plotting the results
+    plt.figure(figsize=(8, 5))
+    plt.scatter(X, y, color='blue', alpha=0.5, label='Data Points')
+    plt.plot(X, y_pred, color='red', linewidth=2, label='Regression Line')
+    plt.title(f'Single Variable Linear Regression: {feature} vs PRICE')
+    plt.xlabel(feature)
+    plt.ylabel('PRICE')
+    plt.legend()
+    plt.grid()
+    plt.savefig(f'client/Image/{feature}_vs_PRICE.png')  # Save the plot
+    plt.close()
 
-# Add intercept term to the feature matrix
-X = np.c_[np.ones(X.shape[0]), X]  # Add a column of ones to X for the intercept
-# X_scaled = np.c_[np.ones(X_scaled.shape[0]), X_scaled]
-# Compute theta using the scaled features
-try:
-    theta = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
-except np.linalg.LinAlgError as e:
-    print("Error in computing theta:", e)
-
-
-
-# Create a mapping for address encoding
-address_columns = [col for col in df9.columns if col.startswith('LOCATION_')]
-address_mapping = {col.replace('LOCATION_', ''): col for col in address_columns}
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Implement Lasso Regression
-lasso_model = Lasso()  # You can tune the 'alpha' parameter as needed
-lasso_model.fit(X_train, y_train)
-
-import pickle
-
-# Data to be saved in the pickle file
-model_data = {
-    'theta': theta,  # Model parameters
-    'lasso': lasso_model,
-    'columns': [col.lower() for col in df9.columns],  # Feature columns used in the model
-    'address_mapping': address_mapping  # Mapping of addresses for one-hot encoding
-}
-
-# Save the data into a pickle file
-with open('server/artifacts/house_price_model.pkl', 'wb') as f:
-    pickle.dump(model_data, f)
-
-print("Model saved to pickle file.")
-# Example of new data
-# new_data = {
-#     'FLOOR': 3.5,
-#     'BEDROOM': 5,
-#     'BATHROOM': 7,
-#     'Aana': 3.2,  # Ensure this matches your cleaned data
-#     'Road': 12,
-# }
-
-# # Example address
-# new_address = 'Bhaisepati, Lalitpur'
-
-
+# Call the function with the desired feature
+plotFeature("BEDROOM")
+plotFeature("BATHROOM")
+plotFeature("Aana")
+plotFeature("FLOOR")
+plotFeature("Road")

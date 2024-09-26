@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
-import pickle
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import json
-from sklearn.linear_model import LinearRegression
 # Load the dataset
 df = pd.read_csv('model/nepali_dataset.csv')
 
@@ -119,6 +118,8 @@ columns = {
 with open("columns.json","w") as f:
     f.write(json.dumps(columns))
     
+
+# Ensure X and y are floats
 X = X.astype(float)
 y = y.astype(float)
 
@@ -126,86 +127,56 @@ y = y.astype(float)
 X = np.array(X)
 y = np.array(y)
 
-# Add intercept term to the feature matrix
+# Add intercept term to the scaled feature matrix
 X = np.c_[np.ones(X.shape[0]), X]  # Add a column of ones to X for the intercept
 
 # Compute theta using the closed-form solution
 try:
     theta = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
-    print(len(theta))
+    print(f"Number of Theta values: {len(theta)}")
 except np.linalg.LinAlgError as e:
     print("Error in computing theta:", e)
 
-# Create a mapping for address encoding
-
-model = LinearRegression()
-model.fit(X, y)
-library_theta = np.append(model.intercept_, model.coef_)
-print("Library Theta (with intercept):", library_theta)
-
-# Compare with your theta
+# Print the computed theta values
 print("Hardcoded Theta:", theta)
-address_columns = [col for col in df11.columns if col.startswith('Address_')]
-address_mapping = {col.replace('Address_', ''): col for col in address_columns}
 
-# Define a function to prepare the new data
-def prepare_feature_vector(new_data):
-    feature_vector = []
-    # Add numeric features
-    for col in df11.columns:
-        if col != 'Price' and col != 'Address':
-            feature_vector.append(new_data.get(col, 0))
-        elif col.startswith('Address_'):
-            feature_vector.append(new_data.get(col, 0))
+from sklearn.model_selection import GridSearchCV
+
+from sklearn.linear_model import Lasso, LinearRegression
+from sklearn.model_selection import ShuffleSplit
+
+def find_best_model_using_gridsearchcv(X, y):
+    algos = {
+        'linear_regression': {
+            'model': LinearRegression(),
+            'params': {
+                'copy_X' : [True, False],
+                'fit_intercept' : [True, False],
+                'n_jobs' : [1,2,3],
+                'positive' : [True, False]
+            }
+        },
+        'lasso': {
+            'model': Lasso(),
+            'params': {
+                'alpha': [1, 2],
+                'selection': ['random', 'cyclic']
+            }
+        }
+    }
     
-    # Add intercept term
-    feature_vector = np.insert(feature_vector, 0, 1)
-    return np.array(feature_vector)
+    scores = []
+    cv = ShuffleSplit(n_splits=5, test_size=0.2, random_state=0)
+    
+    for algo_name, config in algos.items():
+        gs = GridSearchCV(config['model'], config['params'], cv=cv, return_train_score=False)
+        gs.fit(X, y)
+        scores.append({
+            'model': algo_name,
+            'best_score': gs.best_score_,
+            'best_params': gs.best_params_
+        })
 
-# Example of new data
-new_data = {
-    'Bedroom': 6,
-    'Bathroom': 6,
-    'Floors': 3,
-    'Parking': 2,
-    'Aana': 7,  # Ensure this matches your cleaned data
-    'Road': 16,
-}
+    return pd.DataFrame(scores, columns=['model', 'best_score', 'best_params'])
 
-# Example address
-new_address = 'others'
-
-# Add one-hot encoding for the address dynamically
-address_cols = [col for col in df11.columns if col.startswith('Address_')]
-for col in address_cols:
-    if col.replace('Address_', '') == new_address:
-        new_data[col] = 1
-    else:
-        new_data[col] = 0
-
-# Prepare feature vector
-feature_vector = prepare_feature_vector(new_data)
-print((feature_vector))
-# Define a predict function
-def predict(features):
-    return features.dot(theta)
-
-# Make the prediction
-predicted_price = predict(feature_vector)
-print("Predicted price:", predicted_price)
-
-model = LinearRegression(fit_intercept=True)
-model.fit(X, y)
-
-# Get coefficients and intercept
-library_theta = np.append(model.intercept_, model.coef_)
-print("Library Theta (with intercept):", library_theta)
-
-
-print("Deature Theta (with intercept):", feature_vector)
-# Predict with library model
-library_predictions = model.predict([feature_vector])
-
-print(df11.shape)
-print("Library Predictions:", library_predictions)  # First 5 predictions
-# print("Hardcoded Predictions:", hardcoded_predictions)  # First 5 predictions
+print(find_best_model_using_gridsearchcv(X,y))
