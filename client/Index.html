@@ -139,7 +139,21 @@
         </div>
     </form>
     </div> 
+    <div class="home" >
+        <h1 style="font-size: 25px;">Relation of Each Independent Variable with Dependent Variable: </h1>
+        <div class="btnContainer">
+            <button onclick="showImage('Aana')">Aana</button>
+            <button onclick="showImage('Bathroom')">Bathroom</button>
+            <button onclick="showImage('Bedroom')">Bedroom</button>
+            <button onclick="showImage('Floor')">Floor</button>
+            <button onclick="showImage('Road')">Road</button>
+        </div>
 
+        <div class="imgContainer">
+            <img id="regressionImage" src="Image/default.png" alt="Regression Plot">
+        </div>
+
+    </div>
         <div class="home" id="home">
             <h2>Home</h2>
             <div class="content">
@@ -172,6 +186,17 @@
     <footer>
         <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
     </footer>
-
+    <script>
+        function showImage(feature) {
+            // Define the image source based on the feature
+            console.log(feature.toLowerCase())
+            const imageSource = `Image/${feature.toLowerCase()}_vs_PRICE.png`; // Adjust the image path as needed
+            
+            // Get the image element
+            const imgElement = document.getElementById('regressionImage');
+            imgElement.src = imageSource;  // Set the image source
+            imgElement.style.display = 'block';  // Show the image
+        }
+    </script>
 </body>
 </html>

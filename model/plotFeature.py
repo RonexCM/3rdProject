@@ -155,12 +155,12 @@ def plotFeature(feature):
     plt.figure(figsize=(8, 5))
     plt.scatter(X, y, color='blue', alpha=0.5, label='Data Points')
     plt.plot(X, y_pred, color='red', linewidth=2, label='Regression Line')
-    plt.title(f'Single Variable Linear Regression: {feature} vs PRICE')
+    plt.title(f'Single Variable Linear Regression: {feature.lower()} vs PRICE')
     plt.xlabel(feature)
     plt.ylabel('PRICE')
     plt.legend()
     plt.grid()
-    plt.savefig(f'client/Image/{feature}_vs_PRICE.png')  # Save the plot
+    plt.savefig(f'client/Image/{feature.lower()}_vs_PRICE.png')  # Save the plot
     plt.close()
 
 # Call the function with the desired feature

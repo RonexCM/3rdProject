@@ -132,245 +132,287 @@ footer {
     }
 } */
 
-
-body, h1, h2, p, form {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body,
+h1,
+h2,
+p,
+form {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f0f0f0;
 }
 
 header {
-    background-color: #5e656b;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  background-color: #5e656b;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2em;
+  margin: 0;
+  font-size: 2em;
 }
 
 /* Navigation Styles */
 nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: right;
-    gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: right;
+  gap: 20px;
 }
 
 nav a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
 }
 
 header nav ul li a:hover {
-    color: rgb(127, 197, 255);
+  color: rgb(127, 197, 255);
 }
 
-
 .container {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Form Styles */
 form.form {
-    display: flex;
-    flex-direction: column;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form.form h2 {
-    margin-bottom: 15px;
-    color: #5e656b;
-    font-size: 18px;
+  margin-bottom: 15px;
+  color: #5e656b;
+  font-size: 18px;
 }
 
-form input[type="text"], form select {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #333;
-    background-color: #fff;
+form input[type="text"],
+form select {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
 }
 
-form input[type="text"]:focus, form select:focus {
-    border-color: #5e656b;
-    outline: none;
-    box-shadow: 0 0 5px rgba(94, 101, 107, 0.5);
+form input[type="text"]:focus,
+form select:focus {
+  border-color: #5e656b;
+  outline: none;
+  box-shadow: 0 0 5px rgba(94, 101, 107, 0.5);
 }
 
 form button.submit {
-    background: #5e656b;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background 0.3s ease;
+  background: #5e656b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 form button.submit:hover {
-    background: #4a5156;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: #4a5156;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Result Styling */
 
 form.form p {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    color: #5e656b;
-    font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #5e656b;
+  font-size: 18px;
 }
 
 form .result h2 {
-    margin-top: 20px;
-    font-size: 22px;
-    color: #5e656b;
+  margin-top: 20px;
+  font-size: 22px;
+  color: #5e656b;
 }
 
 /* Home Section Styles */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 .home {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .home .content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .home p {
-    flex: 1;
-    font-size: 16px;
-    line-height: 1.6;
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .home img {
-    max-width: 45%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 45%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .about {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .about .content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .about p {
-    flex: 1;
-    font-size: 16px;
-    line-height: 1.6;
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .about img {
-    max-width: 45%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 45%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .contact {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 60px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 60px;
 }
 
 .contact .content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .contact p {
-    flex: 1;
-    font-size: 16px;
-    line-height: 1.6;
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .contact img {
-    max-width: 45%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 45%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 /* Footer Styles */
 footer {
-    background: #5e656b;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  background: #5e656b;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .home .content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .home .content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .home img {
-        max-width: 100%;
-    }
+  .home img {
+    max-width: 100%;
+  }
 
-    form.form {
-        padding: 15px;
-    }
+  form.form {
+    padding: 15px;
+  }
 
-    form button.submit {
-        font-size: 16px;
-    }
+  form button.submit {
+    font-size: 16px;
+  }
+}
+.btnContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.btnContainer button {
+  height: 45px;
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  background: #5e656b;
+  border: none;
+  border-radius: 4px;
+}
+.btnContainer button:hover {
+  background: #53585c;
+}
+.imgContainer {
+  width: 100%; /* Full width */
+  height: 600px; /* Set a fixed height */
+  overflow: hidden; /* Hide overflow if the image exceeds the div */
+  position: relative; /* Position relative for absolute positioning of img */
+}
+
+.imgContainer img {
+  position: absolute; /* Position the image absolutely */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  width: 100%; /* Make the width fill the container */
+  height: auto; /* Maintain aspect ratio */
+  min-width: 100%; /* Ensure it fills the width */
+  min-height: 100%; /* Ensure it fills the height */
+  transform: translate(-50%, -50%); /* Center the image */
 }
