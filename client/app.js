@@ -4,7 +4,7 @@ function onClickedEstimatePrice() {
   var bedroom = document.getElementById("uiBedroom");
   var bath = document.getElementById("uiBathrooms");
   var floor = document.getElementById("uiFloors");
-  var parking = document.getElementById("uiParking");
+  // var parking = document.getElementById("uiParking");
   var road = document.getElementById("uiRoad");
   const selectedModel = document.querySelector(
     'input[name="model_type"]:checked'
@@ -22,7 +22,7 @@ function onClickedEstimatePrice() {
       bath: parseFloat(bath.value),
       location: location.value,
       floor: parseFloat(floor.value),
-      parking: parseFloat(parking.value),
+      // parking: parseFloat(parking.value),
       road: parseFloat(road.value),
       model_type: selectedModel.value,
     },

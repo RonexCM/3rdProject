@@ -28,9 +28,9 @@ def prepare_feature_vector(new_data):
     
     # Iterate through all columns and create the feature vector
     for col in __data_columns:
-        if col != 'price' and col != 'address':
+        if col != 'price' and col != 'location':
             feature_vector.append(new_data.get(col, 0))
-        elif col.startswith('address_'):
+        elif col.startswith('location_'):
             feature_vector.append(new_data.get(col, 0))
     
     # Add intercept term at the beginning
@@ -42,20 +42,26 @@ def predict(features):
     return features.dot(__theta)
 
 # Function to estimate the house price
-def get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road,model_type):
+def get_estimated_price(location, aana, bedroom, bathroom, floors, road,model_type):
     # Prepare new_data dictionary with all features
+    # new_data = {
+#     'FLOOR': 3.5,
+#     'BEDROOM': 5,
+#     'BATHROOM': 7,
+#     'Aana': 3.2,  # Ensure this matches your cleaned data
+#     'Road': 12,
+# }
     new_data = {
+        'floors': floors,
         'bedroom': bedroom,
         'bathroom': bathroom,
-        'floors': floors,
-        'parking': parking,
         'aana': aana,
         'road': road
     }
     # Add one-hot encoding for the address dynamically
-    address_cols = [col for col in __data_columns if col.startswith('address_')]
+    address_cols = [col for col in __data_columns if col.startswith('location_')]
     for col in address_cols:
-        if col.replace('address_', '') == location.lower():
+        if col.replace('location_', '') == location.lower():
             new_data[col] = 1
         else:
             new_data[col] = 0
@@ -85,7 +91,7 @@ def load_saved_artifacts():
         __lasso = model_data['lasso']
         __data_columns = model_data['columns']
         # __data_columns = json.load(f)['data_columns']
-        __locations = [col.replace('address_', '') for col in __data_columns if col.startswith('address_')]
+        __locations = [col.replace('location_', '') for col in __data_columns if col.startswith('location_')]
         __model = model_data  # This will hold all model-related data
     
     print("Loading saved artifacts...done")
