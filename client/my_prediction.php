@@ -1,5 +1,19 @@
 <?php
 session_start();
+require 'connection.php';
+
+$user_id = isset($_POST['sn']) ? $_POST['sn'] : '';
+
+// Prepare and execute the SQL deletion query
+if ($user_id) {
+    $sql = "DELETE FROM predictions WHERE SN = '" . mysqli_real_escape_string($conn, $user_id) . "'";
+    if ($conn->query($sql) === TRUE) {
+        header("Location: my_prediction.php?model_type="); // Redirect back to the page with the table
+        exit();
+    } else {
+        echo "Error deleting entry: " . $conn->error;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +154,10 @@ session_start();
                                         <td>{$row['price']} Crores</td>
                                         <td>{$row['date']}</td>
                                         <td>
-                                            <button class='delete-button' data-id='{$row['user_id']}'>Delete</button>
+                                            <form method='POST' action='my_prediction.php' style='display:inline;'>
+                                                <input type='hidden' name='sn' value='{$row['SN']}'>
+                                                <button type='submit' class='delete-button' onclick='return confirm(\"Are you sure you want to delete this entry?\");'>Delete</button>
+                                            </form>
                                         </td>
                                     </tr>";
                                 $sn++;
