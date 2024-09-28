@@ -1,6 +1,44 @@
 <?php
-session_start()
+session_start();
+require 'connection.php'; // Include database connection if not included already
+
+if (isset($_POST['save'])) {
+    // Ensure that the user session is valid
+    if (isset($_SESSION['userid'])) {
+        $user_id = $_SESSION['userid']; // Retrieve the user ID from the session
+    } else {
+        echo "User not logged in.";
+        exit();
+    }
+
+    // Retrieve form data and sanitize it
+    $aana = mysqli_real_escape_string($conn, $_POST['Aana']);
+    $bedroom = (int)$_POST['Bedroom']; // Cast to integer
+    $bathroom = (int)$_POST['Bathrooms']; // Cast to integer
+    $floor = (int)$_POST['Floors']; // Cast to integer
+    $road = mysqli_real_escape_string($conn, $_POST['Road']);
+    $location = mysqli_real_escape_string($conn, $_POST['location']);
+    $price = $_POST['Price']; // Cast to float for numeric price
+
+    // Prepare SQL query
+    $model_type = "regression"; // Example model type, you can adjust as necessary
+    $date = date('Y-m-d H:i:s'); // Current date and time
+
+    // Insert user data into the predictions table
+    $sql = "INSERT INTO predictions (user_id, aana, bedroom, bathroom, floor, road, location, price, model_type, date) 
+            VALUES ('$user_id', '$aana', $bedroom, $bathroom, $floor, '$road', '$location', $price, '$model_type', '$date')";
+
+    // Execute the query
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+} else {
+    echo "No data submitted.";
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +60,7 @@ session_start()
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <?php if(isset($_SESSION['userid'])): ?>
+                    <li><a href="my_prediction.php">My Prediction</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                 <li><a href="login.php">Login</a></li>
@@ -29,7 +68,6 @@ session_start()
             </ul>
         </nav>
     </header>
-
     <div class="container">
         <h2>Predict the Price</h2>
        
@@ -41,12 +79,12 @@ session_start()
     floors = int(request.form['floors'])
     parking = int(request.form['parking'])
     road = float(request.form['road']) -->
-    <form class="form">
+    <form class="form" method="POST">
         <h2>Area (Aana)</h2>
         <input class="area" type="text" id="uiAana" class="floatLabel" name="Aana" placeholder="Enter the Area in Aana">
         
         <h2>Bedroom</h2>
-        <input class="area" type="text" id="uiBedroom" class="floatLabel" name="BHK" placeholder="Enter the BHK">
+        <input class="area" type="text" id="uiBedroom" class="floatLabel" name="Bedroom" placeholder="Enter the Bedroom">
     
         <h2>Bathrooms</h2>
         <input class="area" type="text" id="uiBathrooms" class="floatLabel" name="Bathrooms" placeholder="Enter the number of Bathrooms">
@@ -58,7 +96,7 @@ session_start()
         <input class="area" type="text" id="uiRoad" class="floatLabel" name="Road" placeholder="Enter the Road Width">
     
         <h2>Location</h2>
-        <select class="location" id="uiLocations">
+        <select class="location" id="uiLocations" name="location">
             <option value="" disabled="disabled" selected="selected">Choose a Location</option>
             <option>Electronic City</option>
             <option>Rajaji Nagar</option>
@@ -71,7 +109,9 @@ session_start()
         <label for="linear">Linear Regression</label><br>
         <input type="radio" id="lasso" name="model_type" value="lasso">
         <label for="lasso">Lasso Regression</label><br><br>
+        <input type="text" style="display:none;" name="Price" id="price"/>
         <button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
+        <button type="submit" name="save">Save</button>
     
         <div id="uiEstimatedPrice" class="result">
             <h2></h2>  

@@ -6,6 +6,7 @@ function onClickedEstimatePrice() {
   var floor = document.getElementById("uiFloors");
   // var parking = document.getElementById("uiParking");
   var road = document.getElementById("uiRoad");
+  var price = document.getElementById("price");
   const selectedModel = document.querySelector(
     'input[name="model_type"]:checked'
   );
@@ -29,10 +30,12 @@ function onClickedEstimatePrice() {
     function (data, status) {
       const priceInRupees = data.estimated_price;
       const priceInCrores = priceInRupees / 10000000;
+      price.value = priceInCrores.toFixed(2).toString() + " Crores</h2>";
       estPrice.innerHTML =
         "<h2> The Predicted Price is " +
         priceInCrores.toFixed(2).toString() +
         " Crores</h2>";
+
       console.log(priceInCrores);
       console.log(status);
     }
