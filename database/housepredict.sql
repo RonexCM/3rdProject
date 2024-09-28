@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 28, 2024 at 10:37 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Sep 28, 2024 at 11:44 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `housepredict`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `predictions`
+--
+
+CREATE TABLE `predictions` (
+  `user_id` int(6) NOT NULL,
+  `aana` int(6) NOT NULL,
+  `bedroom` int(6) NOT NULL,
+  `bathroom` int(6) NOT NULL,
+  `floor` int(6) NOT NULL,
+  `road` int(6) NOT NULL,
+  `location` varchar(256) NOT NULL,
+  `price` varchar(256) NOT NULL,
+  `model_type` varchar(256) NOT NULL,
+  `date` datetime(6) NOT NULL DEFAULT current_timestamp(6)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -47,6 +66,12 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `predictions`
+--
+ALTER TABLE `predictions`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `users`
