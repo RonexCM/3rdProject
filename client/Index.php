@@ -1,6 +1,11 @@
 <?php
 session_start();
-require 'connection.php'; // Include database connection if not included already
+require 'connection.php'; // Include database connection
+
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if (isset($_POST['save'])) {
     // Ensure that the user session is valid
@@ -18,10 +23,10 @@ if (isset($_POST['save'])) {
     $floor = (int)$_POST['Floors']; // Cast to integer
     $road = mysqli_real_escape_string($conn, $_POST['Road']);
     $location = mysqli_real_escape_string($conn, $_POST['location']);
-    $price = $_POST['Price']; // Cast to float for numeric price
+    $price = (float)$_POST['Price']; // Cast to float for numeric price
 
     // Prepare SQL query
-    $model_type = "regression"; // Example model type, you can adjust as necessary
+    $model_type = mysqli_real_escape_string($conn, $_POST['model_type']); // Ensure it's sanitized
     $date = date('Y-m-d H:i:s'); // Current date and time
 
     // Insert user data into the predictions table
@@ -30,14 +35,13 @@ if (isset($_POST['save'])) {
 
     // Execute the query
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        // echo "New record created successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql . "<br>" . $conn->error; // Show detailed error message
     }
-} else {
-    echo "No data submitted.";
 }
 ?>
+
 
 
 <!DOCTYPE html>
