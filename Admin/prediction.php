@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch predictions from the database
-$sql = "SELECT * FROM predictions"; // Adjust table name if needed
+$sql = "SELECT * FROM predictions"; 
 $result = $conn->query($sql);
 ?>
 
@@ -109,7 +109,6 @@ $result = $conn->query($sql);
 
         function deletePrediction(id) {
             if (confirm("Are you sure you want to delete this prediction?")) {
-                // Send a delete request to the server using AJAX or a form
                 window.location.href = "delete_prediction.php?id=" + id;
             }
         }
