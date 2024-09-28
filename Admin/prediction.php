@@ -1,3 +1,22 @@
+<?php
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "housepredict"; 
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch predictions from the database
+$sql = "SELECT * FROM predictions"; // Adjust table name if needed
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +35,7 @@
             <li><a href="Index.php">Dashboard</a></li>
             <li><a href="datamanage.php">Data Management</a></li>
             <li><a href="prediction.php" class="active">Predictions</a></li>
-            <li><a href="Usersdetails.php">Users Details</a></li>
+            <li><a href="Userdetails.php">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -34,15 +53,39 @@
             <table id="predictions-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Size (sq ft)</th>
-                        <th>Price</th>
-                        <th>Action</th>
+                    <th>S.N</th>
+                    <th>Aana</th>
+                    <th>Bedroom</th>
+                    <th>Bathroom</th>
+                    <th>Floor</th>
+                    <th>Road</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                    <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="predictions-body">
-                    <!-- Predictions will be dynamically loaded here -->
+                    <?php
+                    if ($result->num_rows > 0) {
+                        // Output data of each row
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row["S.N"] . "</td>";
+                            echo "<td>" . $row["Aana"] . "</td>";
+                            echo "<td>" . $row["Bedroom"] . "</td>";
+                            echo "<td>" . $row["Bathroom"] . " sq ft</td>";
+                            echo "<td>" . $row["Floor"] . " </td>";
+                            echo "<td>" . $row["Road"] . " sq ft</td>";
+                            echo "<td>" . $row["Price"] . " </td>";
+                            echo "<td>" . $row["Date"] . " </td>";
+                            echo "<td>Nrs. " . $row["Action"] . "</td>";
+                            echo "<td><button onclick='deletePrediction(" . $row["id"] . ")'>Delete</button></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No predictions found</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -50,73 +93,6 @@
 
     <!-- JavaScript -->
     <script>
-        //API halne yaaa)
-        const predictions = [{
-            date: '2024-08-20',
-            location: 'Kathmandu',
-            size: 1200,
-            price: '3,050,000'
-        }, {
-            date: '2024-08-19',
-            location: 'Pokhara',
-            size: 1800,
-            price: '4,500,000'
-        }, {
-            date: '2024-08-18',
-            location: 'Lalitpur',
-            size: 900,
-            price: '2,500,000'
-        }, ];
-
-        // Function to dynamically load predictions into the table
-        function loadPredictions() {
-            const tableBody = document.getElementById('predictions-body');
-            tableBody.innerHTML = ''; // Clear any existing rows
-
-            predictions.forEach((prediction, index) => {
-                const row = document.createElement('tr');
-
-                // Create table cells for each data field
-                const dateCell = document.createElement('td');
-                dateCell.textContent = prediction.date;
-
-                const locationCell = document.createElement('td');
-                locationCell.textContent = prediction.location;
-
-                const sizeCell = document.createElement('td');
-                sizeCell.textContent = `${prediction.size} sq ft`;
-
-                const priceCell = document.createElement('td');
-                priceCell.textContent = `Nrs. ${prediction.price}`;
-
-                const actionCell = document.createElement('td');
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function() {
-                    deletePrediction(index);
-                };
-                actionCell.appendChild(deleteButton);
-
-                // Append all cells to the row
-                row.appendChild(dateCell);
-                row.appendChild(locationCell);
-                row.appendChild(sizeCell);
-                row.appendChild(priceCell);
-                row.appendChild(actionCell);
-
-                // Append the row to the table body
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Function to delete a prediction
-        function deletePrediction(index) {
-            predictions.splice(index, 1); 
-            loadPredictions(); 
-            alert('Delete the Prediction ?');
-        }
-
-        // Toggle Sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             const content = document.querySelector(".content");
@@ -131,9 +107,17 @@
             }
         }
 
-        // Load predictions when the page loads
-        window.onload = loadPredictions;
+        function deletePrediction(id) {
+            if (confirm("Are you sure you want to delete this prediction?")) {
+                // Send a delete request to the server using AJAX or a form
+                window.location.href = "delete_prediction.php?id=" + id;
+            }
+        }
     </script>
 </body>
 
 </html>
+
+<?php
+$conn->close();
+?>
