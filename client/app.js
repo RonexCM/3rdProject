@@ -1,16 +1,19 @@
 function onClickedEstimatePrice() {
-  console.log("Estimate price button clicked");
+  console.log("Estimate price button");
   var aana = document.getElementById("uiAana");
   var bedroom = document.getElementById("uiBedroom");
   var bath = document.getElementById("uiBathrooms");
   var floor = document.getElementById("uiFloors");
-  var parking = document.getElementById("uiParking");
+  // var parking = document.getElementById("uiParking");
   var road = document.getElementById("uiRoad");
+  const selectedModel = document.querySelector(
+    'input[name="model_type"]:checked'
+  );
 
+  console.log(selectedModel.value);
   var estPrice = document.getElementById("uiEstimatedPrice");
   var location = document.getElementById("uiLocations");
   var url = "http://127.0.0.1:5000/predict_home_price"; //Use this if you are NOT using nginx which is first 7 tutorials
-
   $.post(
     url,
     {
@@ -19,8 +22,9 @@ function onClickedEstimatePrice() {
       bath: parseFloat(bath.value),
       location: location.value,
       floor: parseFloat(floor.value),
-      parking: parseFloat(parking.value),
+      // parking: parseFloat(parking.value),
       road: parseFloat(road.value),
+      model_type: selectedModel.value,
     },
     function (data, status) {
       const priceInRupees = data.estimated_price;

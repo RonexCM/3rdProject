@@ -54,9 +54,6 @@ session_start()
         <h2>Floors</h2>
         <input class="area" type="text" id="uiFloors" class="floatLabel" name="Floors" placeholder="Enter the number of Floors">
     
-        <h2>Parking</h2>
-        <input class="area" type="text" id="uiParking" class="floatLabel" name="Parking" placeholder="Enter the number of Parking spaces">
-    
         <h2>Road Width (Feet)</h2>
         <input class="area" type="text" id="uiRoad" class="floatLabel" name="Road" placeholder="Enter the Road Width">
     
@@ -69,7 +66,11 @@ session_start()
             <option>Baneshwor</option>
             <option>Others</option>
         </select>
-    
+        <label>Select Model:</label><br>
+        <input type="radio" id="linear" name="model_type" value="linear" checked>
+        <label for="linear">Linear Regression</label><br>
+        <input type="radio" id="lasso" name="model_type" value="lasso">
+        <label for="lasso">Lasso Regression</label><br><br>
         <button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
     
         <div id="uiEstimatedPrice" class="result">
@@ -77,7 +78,21 @@ session_start()
         </div>
     </form>
     </div> 
+    <div class="home" >
+        <h1 style="font-size: 25px;">Relation of Each Independent Variable with Dependent Variable: </h1>
+        <div class="btnContainer">
+            <button onclick="showImage('Aana')">Aana</button>
+            <button onclick="showImage('Bathroom')">Bathroom</button>
+            <button onclick="showImage('Bedroom')">Bedroom</button>
+            <button onclick="showImage('Floor')">Floor</button>
+            <button onclick="showImage('Road')">Road</button>
+        </div>
 
+        <div class="imgContainer">
+            <img id="regressionImage" src="Image/default.png" alt="Regression Plot">
+        </div>
+
+    </div>
         <div class="home" id="home">
             <h2>Home</h2>
             <div class="content">
@@ -110,6 +125,17 @@ session_start()
     <footer>
         <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
     </footer>
-
+    <script>
+        function showImage(feature) {
+            // Define the image source based on the feature
+            console.log(feature.toLowerCase())
+            const imageSource = `Image/${feature.toLowerCase()}_vs_PRICE.png`; // Adjust the image path as needed
+            
+            // Get the image element
+            const imgElement = document.getElementById('regressionImage');
+            imgElement.src = imageSource;  // Set the image source
+            imgElement.style.display = 'block';  // Show the image
+        }
+    </script>
 </body>
 </html>

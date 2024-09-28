@@ -23,12 +23,13 @@ def predict_home_price():
     bedroom = int(request.form['bedroom'])
     bathroom = int(request.form['bath'])
     floors = int(request.form['floor'])
-    parking = int(request.form['parking'])
+    # parking = int(request.form['parking'])
     road = float(request.form['road'])
-    print(aana,location,bedroom,floors,parking,road)
+    model_type = request.form['model_type']
+
     response = jsonify({
         # 'estimated_price': util.get_estimated_price(location,total_sqft, bhk, bath,balcony)
-        'estimated_price': util.get_estimated_price(location, aana, bedroom, bathroom, floors, parking, road)
+        'estimated_price': util.get_estimated_price(location, aana, bedroom, bathroom, floors, road,model_type)
     })
     response.headers.add('Access-Control-Allow-Origin','*')
     
