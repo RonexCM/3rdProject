@@ -36,21 +36,36 @@ $result = $conn->query($sql);
     <title>House Price Prediction System</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="app.js"></script>
-    <link rel="stylesheet" href="../Admin/datamanage.css">
+    <!-- <link rel="stylesheet" href="../Admin/datamanage.css"> -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <!-- Content Area -->
-    <div class="content">
-        <!-- Header with Sidebar Toggle -->
-        <div class="header">
-            <span class="menu-icon" id="menu-icon" onclick="toggleSidebar()">&#9776;</span>
-            <h1>Data Management</h1>
-        </div>
 
-        <!-- Data Management Section -->
+<header>
+        <h1>House Price Prediction System</h1>
+        <nav>
+            <ul>
+                <!-- <li><a href="#">Home</a></li> -->
+                <li><a href="Index.php">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <?php if(isset($_SESSION['userid'])): ?>
+                    <li><a href="my_prediction.php">My Prediction</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                <?php else: ?>
+                <li><a href="login.php">Login</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+
         <div class="data-management">
             <div class="flex" style="display:flex; gap:10px;">
+                <div class="actions">
+                    <button onclick="filterData('linear')">All</button>
+                </div>
                 <div class="actions">
                     <button onclick="filterData('linear')">Linear Regression</button>
                 </div>
@@ -71,6 +86,7 @@ $result = $conn->query($sql);
                             <th>Road</th>
                             <th>Price</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,8 +106,7 @@ $result = $conn->query($sql);
                                         <td>{$row['price']} Crores</td>
                                         <td>{$row['date']}</td>
                                         <td>
-                                            <button onclick='editEntry(this)'>Edit</button>
-                                            <button onclick='deleteEntry(this)'>Delete</button>
+                                            <button class='delete-button' data-id='{$row['id']}'>Delete</button>
                                         </td>
                                     </tr>";
                                 $sn++;
@@ -120,5 +135,8 @@ $result = $conn->query($sql);
         }
     </script>
 
+    <footer>
+        <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
+    </footer>
 </body>
 </html>
