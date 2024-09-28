@@ -1,3 +1,5 @@
+var isEstimate = false;
+var flexContainer = document.getElementById("formActions");
 function onClickedEstimatePrice() {
   console.log("Estimate price button");
   var aana = document.getElementById("uiAana");
@@ -34,8 +36,11 @@ function onClickedEstimatePrice() {
       estPrice.innerHTML =
         "<h2> The Predicted Price is " +
         priceInCrores.toFixed(2).toString() +
-        " Crores</h2>";
+        " Crores</h2> <div class='flex' style='display: flex;gap:20px;'><button class='submit' style='width: 125px;' type='submit' name='save'>Save</button> <button class='submit' style='width: 125px;' onclick='resetForm();' name='reset'>Reset</button> </div>";
 
+      // <button class="submit" style="width: 125px;" type="submit" name="save">Save</button>
+
+      isEstimate = true;
       console.log(priceInCrores);
       console.log(status);
     }

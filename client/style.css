@@ -382,20 +382,19 @@ html {
   background-color: #c82333;
 }
 
-
 /* Responsive Design */
 
 @media (max-width: 768px) {
   .sidebar {
-      width: 0;
-      overflow: hidden;
+    width: 0;
+    overflow: hidden;
   }
   .content {
-      margin-left: 0;
-      width: 100%;
+    margin-left: 0;
+    width: 100%;
   }
   #menu-icon {
-      display: block;
+    display: block;
   }
 }
 

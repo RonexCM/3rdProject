@@ -64,7 +64,7 @@ if (isset($_POST['save'])) {
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <?php if(isset($_SESSION['userid'])): ?>
-                    <li><a href="my_prediction.php">My Prediction</a></li>
+                    <li><a href="my_prediction.php?model_type=">My Prediction</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                 <li><a href="login.php">Login</a></li>
@@ -115,11 +115,12 @@ if (isset($_POST['save'])) {
         <label for="lasso">Lasso Regression</label><br><br>
         <input type="text" style="display:none;" name="Price" id="price"/>
         <button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
-        <button type="submit" name="save">Save</button>
+        
     
         <div id="uiEstimatedPrice" class="result">
             <h2></h2>  
         </div>
+        
     </form>
     </div> 
     <div class="home" >
@@ -170,6 +171,13 @@ if (isset($_POST['save'])) {
         <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
     </footer>
     <script>
+        function resetForm() {
+        // Reset all the input fields in the form
+        document.querySelector('.form').reset();
+
+        // Clear the estimated price output (if any)
+        document.getElementById("uiEstimatedPrice").querySelector("h2").innerHTML = "";
+    }
         function showImage(feature) {
             // Define the image source based on the feature
             console.log(feature.toLowerCase())

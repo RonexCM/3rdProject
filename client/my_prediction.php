@@ -49,7 +49,7 @@ session_start();
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <?php if(isset($_SESSION['userid'])): ?>
-                    <li><a href="my_prediction.php">My Prediction</a></li>
+                    <li><a href="my_prediction.php?model_type=">My Prediction</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                 <li><a href="login.php">Login</a></li>
