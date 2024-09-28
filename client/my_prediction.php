@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +13,31 @@
     <!-- <link rel="stylesheet" href="../Admin/datamanage.css"> -->
     <link rel="stylesheet" href="style.css">
 </head>
+<style>
+    .actions a {
+        padding: 5px 10px;
+        margin:none;
+        color: black;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+        color: #5e656b;
+
+}
+
+.actions a:hover {
+    color: black;
+
+}
+
+.actions a.active {
+    color: #28a745; /* Highlight active link in green */
+    text-decoration: none; /* Remove underline from active link */
+    font-weight: bold;
+    border-bottom:3px solid; 
+}
+
+</style>
 <body>
 
 <header>
@@ -34,22 +61,27 @@
     <div class="content">
 
         <div class="data-management">
-            <div class="flex" style="display:flex; gap:10px;">
-            <form method="POST" action="">
-                <div class="flex" style="display:flex; gap:15px">
+        <div class="flex" style="display:flex;">
+            <?php
+            // Check if a model type is selected
+            $model_type = isset($_GET['model_type']) ? $_GET['model_type'] : 'all'; // Default to 'all'
 
-                    <div class="actions">
-                        <button type="submit" name="model_type" value="linear">Linear Regression</button>
-                    </div>
-                    <div class="actions">
-                        <button type="submit" name="model_type" value="lasso">Lasso Regression</button>
-                    </div>
-
-
-                </div>
-            </form>
-
+            // Function to add active class
+            function isActive($type, $model_type) {
+                return $type === $model_type ? 'active' : '';
+            }
+            ?>
+            <div class="actions">
+                <a href="?model_type=" class="<?= isActive('', $model_type) ?>">All</a>
             </div>
+            <div class="actions">
+                <a href="?model_type=linear" class="<?= isActive('linear', $model_type) ?>">Linear Regression</a>
+            </div>
+            <div class="actions">
+                <a href="?model_type=lasso" class="<?= isActive('lasso', $model_type) ?>">Lasso Regression</a>
+            </div>
+</div>
+
 
             <div class="data-table">
                 <table id="data-table">
@@ -73,7 +105,6 @@
                         ini_set('display_startup_errors', 1);
                         error_reporting(E_ALL);
                         include("connection.php");
-                        session_start();
 
                         // Ensure that the user session is valid
                         if (!isset($_SESSION['userid'])) {
@@ -85,7 +116,7 @@
                         $user_id = $_SESSION['userid'];
 
                         // Fetch the model_type from the form POST request
-                        $model_type = isset($_POST['model_type']) ? $_POST['model_type'] : '';
+                        $model_type = isset($_GET['model_type']) ? $_GET['model_type'] : '';
 
                         // Prepare SQL query based on model type and user ID
                         $sql = "SELECT * FROM predictions WHERE user_id = '" . mysqli_real_escape_string($conn, $user_id) . "'";
@@ -109,7 +140,7 @@
                                         <td>{$row['price']} Crores</td>
                                         <td>{$row['date']}</td>
                                         <td>
-                                            <button class='delete-button' data-id='{$row['id']}'>Delete</button>
+                                            <button class='delete-button' data-id='{$row['user_id']}'>Delete</button>
                                         </td>
                                     </tr>";
                                 $sn++;
