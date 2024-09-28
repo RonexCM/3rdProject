@@ -1,7 +1,33 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include("connection.php");
-session_start()
+session_start();
+
+// Ensure that the user session is valid
+if (!isset($_SESSION['userid'])) {
+    echo "User not logged in.";
+    exit();
+}
+
+// Get the user ID from the session
+$user_id = $_SESSION['userid'];
+
+// Fetch predictions from the database for the logged-in user
+$model_type = isset($_POST['model_type']) ? $_POST['model_type'] : '';
+
+// Prepare SQL query based on model type and user ID
+$sql = "SELECT * FROM predictions WHERE user_id = '" . mysqli_real_escape_string($conn, $user_id) . "'";
+if ($model_type) {
+    $sql .= " AND model_type = '" . mysqli_real_escape_string($conn, $model_type) . "'";
+}
+$result = $conn->query($sql);
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,10 +52,10 @@ session_start()
         <div class="data-management">
             <div class="flex" style="display:flex; gap:10px;">
                 <div class="actions">
-                    <button onclick="addNewEntry()">Linear Regression</button>
+                    <button onclick="filterData('linear')">Linear Regression</button>
                 </div>
                 <div class="actions">
-                    <button onclick="addNewEntry()">Lasso Regression</button>
+                    <button onclick="filterData('lasso')">Lasso Regression</button>
                 </div>
             </div>
 
@@ -38,7 +64,7 @@ session_start()
                     <thead>
                         <tr>
                             <th>S.N</th>
-                            <th>Aana</th>
+                            <th>Aana</tgsdh>
                             <th>Bedroom</th>
                             <th>Bathroom</th>
                             <th>Floor</th>
@@ -48,41 +74,51 @@ session_start()
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Kathmandu</td>
-                            <td>1200</td>
-                            <td>Nrs. 3050,000</td>
-                            <td>
-                                <button onclick="editEntry(this)">Edit</button>
-                                <button onclick="deleteEntry(this)">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Pokhara</td>
-                            <td>1800</td>
-                            <td>Nrs. 450,0000</td>
-                            <td>
-                                <button onclick="editEntry(this)">Edit</button>
-                                <button onclick="deleteEntry(this)">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Lalitpur</td>
-                            <td>900</td>
-                            <td>Nrs. 2500,000</td>
-                            <td>
-                                <button onclick="editEntry(this)">Edit</button>
-                                <button onclick="deleteEntry(this)">Delete</button>
-                            </td>
-                        </tr>
+                        <?php
+                        // Check if the result has rows
+                        if ($result && $result->num_rows > 0) {
+                            // Output data of each row
+                            $sn = 1; // Serial number
+                            while($row = $result->fetch_assoc()) {
+                                echo "<tr>
+                                        <td>{$sn}.</td>
+                                        <td>{$row['aana']}</td>
+                                        <td>{$row['bedroom']}</td>
+                                        <td>{$row['bathroom']}</td>
+                                        <td>{$row['floor']}</td>
+                                        <td>{$row['road']}</td>
+                                        <td>{$row['price']} Crores</td>
+                                        <td>{$row['date']}</td>
+                                        <td>
+                                            <button onclick='editEntry(this)'>Edit</button>
+                                            <button onclick='deleteEntry(this)'>Delete</button>
+                                        </td>
+                                    </tr>";
+                                $sn++;
+                            }
+                        } else {
+                            echo "<tr><td colspan='8'>No records found</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <script>
+        function filterData(modelType) {
+            $.ajax({
+                type: "POST",
+                url: "your_php_file.php", // Update with the path to this PHP file
+                data: { model_type: modelType },
+                success: function(data) {
+                    // Replace the table body with new data
+                    $('#data-table tbody').html(data);
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
