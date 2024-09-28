@@ -54,6 +54,52 @@ if (isset($_POST['save'])) {
     <script src="app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+<style>
+    .tab {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .tab.active {
+ /* Active tab color */
+        }
+
+        .content {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+        .actions a {
+        padding: 5px 10px;
+        margin:none;
+        color: black;
+        text-decoration: none;
+        font-size: 16px;
+
+}
+
+.actions a:hover {
+    color: black;
+
+}
+
+.actions a.active {
+    color: #28a745; /* Highlight active link in green */
+    text-decoration: none; /* Remove underline from active link */
+    font-weight: bold;
+    border-bottom:3px solid; 
+}
+</style>
+
 <body>
     <header>
         <h1>House Price Prediction System</h1>
@@ -123,7 +169,20 @@ if (isset($_POST['save'])) {
         
     </form>
     </div> 
-    <div class="home" >
+    <div class="flex" style="display:flex; justify-content:center; align-items:center;">
+        <div class="actions">
+
+            <a  class="tab active" id="relationTab" onclick="showRelation()">Relation</a>
+        </div>
+        <div class="actions">
+
+            <a  class="tab" id="compareTab" onclick="showCompare()">Compare</a>
+        </div>
+    </div>
+    <div  id="compareDiv" class="content hidden home">
+                    Compare
+    </div>
+    <div  id="relationDiv" class="content home">
         <h1 style="font-size: 25px;">Relation of Each Independent Variable with Dependent Variable: </h1>
         <div class="btnContainer">
             <button onclick="showImage('Aana')">Aana</button>
@@ -146,7 +205,7 @@ if (isset($_POST['save'])) {
                 <img src="Image/House.jpg" alt="House Image">
             </div>
         </div>
-    </div>
+    </di>
 
  
 <div class="about" id="about">
@@ -171,6 +230,27 @@ if (isset($_POST['save'])) {
         <p>&copy; 2024 House Price Prediction System. All rights reserved.</p>
     </footer>
     <script>
+        function showRelation() {
+        // event.preventDefault();
+        document.getElementById('relationDiv').classList.remove('hidden');
+        document.getElementById('compareDiv').classList.add('hidden');
+        setActiveTab('relationTab');
+    }
+
+    function showCompare() {
+        // event.preventDefault();
+        document.getElementById('relationDiv').classList.add('hidden');
+        document.getElementById('compareDiv').classList.remove('hidden');
+        setActiveTab('compareTab');
+    }
+
+    function setActiveTab(activeTabId) {
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById(activeTabId).classList.add('active');
+    }
         function resetForm() {
         // Reset all the input fields in the form
         document.querySelector('.form').reset();
