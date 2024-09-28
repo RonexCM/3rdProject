@@ -7,7 +7,7 @@ if (isset($_POST['save'])) {
     if (isset($_SESSION['userid'])) {
         $user_id = $_SESSION['userid']; // Retrieve the user ID from the session
     } else {
-        echo "User not logged in.";
+        // echo "User not logged in.";
         exit();
     }
 
@@ -30,13 +30,11 @@ if (isset($_POST['save'])) {
 
     // Execute the query
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        // echo "New record created successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-} else {
-    echo "No data submitted.";
-}
+} 
 ?>
 
 
