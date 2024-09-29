@@ -96,7 +96,7 @@ $result = $conn->query($sql);
                 content.style.width = "100%";
             }
         }
-
+        
         // View User Details
         function viewUser(button) {
             var row = button.parentNode.parentNode;

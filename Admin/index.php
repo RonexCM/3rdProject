@@ -1,32 +1,16 @@
 <?php
 include("Conn.php");
-
-//Fetching total number of predictions
 $predictionsQuery = "SELECT COUNT(*) as total_predictions FROM predictions";
 $predictionsResult = $conn->query($predictionsQuery);
 $predictionsCount = $predictionsResult->fetch_assoc()['total_predictions'];
 
-//Fetching total number of users
 $usersQuery = "SELECT COUNT(*) as total_users FROM users";
 $usersResult = $conn->query($usersQuery);
 $usersCount = $usersResult->fetch_assoc()['total_users'];
 
-// $modelsQuery = "SELECT COUNT(*) as total_models FROM models";
-// $modelsResult = $conn->query($modelsQuery);
-// $modelsCount = $modelsResult->fetch_assoc()['total_models'];
-
-// // Fetching recent predictions
-// $recent_predictions_query = "SELECT * FROM predictions ORDER BY date DESC LIMIT 4";
-// $recent_predictions_result = $conn->query($recent_predictions_query);
-// $recent_predictions = [];
-// if ($recent_predictions_result->num_rows > 0) {
-//     while ($row = $recent_predictions_result->fetch_assoc()) {
-//         $recent_predictions[] = $row;
-//     }
-// }
-
-$conn->close();
-?>
+$model_typeQuery = "SELECT COUNT(*) as total_models FROM predictions";
+$model_typeResult = $conn->query($model_typeQuery);
+$model_typeCount = $model_typeResult->fetch_assoc()['total_models'];
 ?>
 
 <!DOCTYPE html>
@@ -74,9 +58,7 @@ $conn->close();
 
             <div class="stat-box">
                 <h3>Models</h3>
-                <p id="models">2</p>
-                <!-- Dynamically display the total number of models from the database
-                <p id="models"><?php echo $modelsCount; ?></p> -->
+                <p id="models"><?php echo $modelsCount; ?></p>
             </div>
 
         </div>
@@ -147,3 +129,6 @@ $conn->close();
 </body>
 
 </html>
+<?php
+$conn->close();
+?>

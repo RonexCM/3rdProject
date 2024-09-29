@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$dbname = "housepredict"; 
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include("Conn.php"); 
 
 // Fetch predictions from the database
 $sql = "SELECT * FROM predictions"; 
@@ -35,7 +24,7 @@ $result = $conn->query($sql);
             <li><a href="Index.php">Dashboard</a></li>
             <li><a href="datamanage.php">Data Management</a></li>
             <li><a href="prediction.php" class="active">Predictions</a></li>
-            <li><a href="Usersdetails">Users Details</a></li>
+            <li><a href="Usersdetails.php">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -53,37 +42,37 @@ $result = $conn->query($sql);
             <table id="predictions-table">
                 <thead>
                     <tr>
-                    <th>S.N</th>
-                    <th>Aana</th>
-                    <th>Bedroom</th>
-                    <th>Bathroom</th>
-                    <th>Floor</th>
-                    <th>Road</th>
-                    <th>Price</th>
-                    <th>Date</th>
-                    <th>Action</th>
+                        <th>S.N</th>
+                        <th>Aana</th>
+                        <th>Bedroom</th>
+                        <th>Bathroom</th>
+                        <th>Floor</th>
+                        <th>Road</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="predictions-body">
                     <?php
                     if ($result->num_rows > 0) {
+                        $sn = 1; // For serial number
                         // Output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $row["S.N"] . "</td>";
+                            echo "<td>" . $sn++ . "</td>"; // Increment serial number
                             echo "<td>" . $row["Aana"] . "</td>";
                             echo "<td>" . $row["Bedroom"] . "</td>";
-                            echo "<td>" . $row["Bathroom"] . " sq ft</td>";
-                            echo "<td>" . $row["Floor"] . " </td>";
-                            echo "<td>" . $row["Road"] . " sq ft</td>";
-                            echo "<td>" . $row["Price"] . " </td>";
-                            echo "<td>" . $row["Date"] . " </td>";
-                            echo "<td>Nrs. " . $row["Action"] . "</td>";
+                            echo "<td>" . $row["Bathroom"] . "</td>";
+                            echo "<td>" . $row["Floor"] . "</td>";
+                            echo "<td>" . $row["Road"] . "</td>";
+                            echo "<td>Nrs. " . $row["Price"] . "</td>";
+                            echo "<td>" . $row["Date"] . "</td>";
                             echo "<td><button onclick='deletePrediction(" . $row["id"] . ")'>Delete</button></td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='5'>No predictions found</td></tr>";
+                        echo "<tr><td colspan='9'>No predictions found</td></tr>";
                     }
                     ?>
                 </tbody>
