@@ -35,7 +35,7 @@ $result = $conn->query($sql);
             <li><a href="Index.php">Dashboard</a></li>
             <li><a href="datamanage.php">Data Management</a></li>
             <li><a href="prediction.php" class="active">Predictions</a></li>
-            <li><a href="Userdetails.php">Users Details</a></li>
+            <li><a href="Usersdetails">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>

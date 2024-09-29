@@ -1,3 +1,34 @@
+<?php
+include("Conn.php");
+
+//Fetching total number of predictions
+$predictionsQuery = "SELECT COUNT(*) as total_predictions FROM predictions";
+$predictionsResult = $conn->query($predictionsQuery);
+$predictionsCount = $predictionsResult->fetch_assoc()['total_predictions'];
+
+//Fetching total number of users
+$usersQuery = "SELECT COUNT(*) as total_users FROM users";
+$usersResult = $conn->query($usersQuery);
+$usersCount = $usersResult->fetch_assoc()['total_users'];
+
+// $modelsQuery = "SELECT COUNT(*) as total_models FROM models";
+// $modelsResult = $conn->query($modelsQuery);
+// $modelsCount = $modelsResult->fetch_assoc()['total_models'];
+
+// // Fetching recent predictions
+// $recent_predictions_query = "SELECT * FROM predictions ORDER BY date DESC LIMIT 4";
+// $recent_predictions_result = $conn->query($recent_predictions_query);
+// $recent_predictions = [];
+// if ($recent_predictions_result->num_rows > 0) {
+//     while ($row = $recent_predictions_result->fetch_assoc()) {
+//         $recent_predictions[] = $row;
+//     }
+// }
+
+$conn->close();
+?>
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,17 +64,21 @@
         <div class="statistics">
             <div class="stat-box">
                 <h3>Total Predictions</h3>
-                <p id="total-predictions">1,245</p>
+                <p id="total-predictions"><?php echo $predictionsCount; ?></p>
             </div>
             
             <div class="stat-box">
                 <h3>Users</h3>
-                <p id="total-users">450</p>
+                <p id="total-users"><?php echo $usersCount; ?></p>
             </div>
+
             <div class="stat-box">
-                <h3>Data Entries</h3>
-                <p id="data-entries">12,345</p>
+                <h3>Models</h3>
+                <p id="models">2</p>
+                <!-- Dynamically display the total number of models from the database
+                <p id="models"><?php echo $modelsCount; ?></p> -->
             </div>
+
         </div>
 
         <!-- Recent Predictions Section -->
