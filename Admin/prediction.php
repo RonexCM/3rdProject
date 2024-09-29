@@ -22,7 +22,6 @@ $result = $conn->query($sql);
         <h2>Admin Dashboard</h2>
         <ul>
             <li><a href="Index.php">Dashboard</a></li>
-            <li><a href="datamanage.php">Data Management</a></li>
             <li><a href="prediction.php" class="active">Predictions</a></li>
             <li><a href="Usersdetails.php">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -61,14 +60,14 @@ $result = $conn->query($sql);
                         while($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $sn++ . "</td>"; // Increment serial number
-                            echo "<td>" . $row["Aana"] . "</td>";
-                            echo "<td>" . $row["Bedroom"] . "</td>";
-                            echo "<td>" . $row["Bathroom"] . "</td>";
-                            echo "<td>" . $row["Floor"] . "</td>";
-                            echo "<td>" . $row["Road"] . "</td>";
-                            echo "<td>Nrs. " . $row["Price"] . "</td>";
-                            echo "<td>" . $row["Date"] . "</td>";
-                            echo "<td><button onclick='deletePrediction(" . $row["id"] . ")'>Delete</button></td>";
+                            echo "<td>" . $row["aana"] . "</td>";
+                            echo "<td>" . $row["bedroom"] . "</td>";
+                            echo "<td>" . $row["bathroom"] . "</td>";
+                            echo "<td>" . $row["floor"] . "</td>";
+                            echo "<td>" . $row["road"] . "</td>";
+                            echo "<td>Nrs. " . $row["price"] . "</td>";
+                            echo "<td>" . $row["date"] . "</td>";
+                            echo "<td><button onclick='deletePrediction(" . $row["SN"] . ")'>Delete</button></td>";
                             echo "</tr>";
                         }
                     } else {

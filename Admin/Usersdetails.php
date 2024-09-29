@@ -33,7 +33,6 @@ $result = $conn->query($sql);
         <h2>Admin Dashboard</h2>
         <ul>
             <li><a href="Index.php">Dashboard</a></li>
-            <li><a href="datamanage.php">Data Management</a></li>
             <li><a href="prediction.php">Predictions</a></li>
             <li><a href="Userdetails.php" class="active">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -96,7 +95,7 @@ $result = $conn->query($sql);
                 content.style.width = "100%";
             }
         }
-        
+
         // View User Details
         function viewUser(button) {
             var row = button.parentNode.parentNode;

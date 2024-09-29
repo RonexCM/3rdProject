@@ -1,35 +1,43 @@
 <?php
 include("Conn.php");
+
+// Fetching total number of predictions
 $predictionsQuery = "SELECT COUNT(*) as total_predictions FROM predictions";
 $predictionsResult = $conn->query($predictionsQuery);
 $predictionsCount = $predictionsResult->fetch_assoc()['total_predictions'];
 
+// Fetching total number of users
 $usersQuery = "SELECT COUNT(*) as total_users FROM users";
 $usersResult = $conn->query($usersQuery);
 $usersCount = $usersResult->fetch_assoc()['total_users'];
 
-$model_typeQuery = "SELECT COUNT(*) as total_models FROM predictions";
-$model_typeResult = $conn->query($model_typeQuery);
-$model_typeCount = $model_typeResult->fetch_assoc()['total_models'];
+// Fetching recent predictions
+$recentPredictionsQuery = "SELECT * FROM predictions ORDER BY date DESC LIMIT 4";
+$recentPredictionsResult = $conn->query($recentPredictionsQuery);
+$recentPredictions = [];
+if ($recentPredictionsResult && $recentPredictionsResult->num_rows > 0) {
+    while ($row = $recentPredictionsResult->fetch_assoc()) {
+        $recentPredictions[] = $row;
+    }
+} else {
+    $recentPredictions[] = []; // Ensure $recentPredictions is an array even if no records are found
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="index.css">
 </head>
-
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <h2>Admin Dashboard</h2>
         <ul>
             <li><a href="Index.php" class="active">Dashboard</a></li>
-            <li><a href="datamanage.php">Data Management</a></li>
             <li><a href="prediction.php">Predictions</a></li>
             <li><a href="Usersdetails.php">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -55,12 +63,6 @@ $model_typeCount = $model_typeResult->fetch_assoc()['total_models'];
                 <h3>Users</h3>
                 <p id="total-users"><?php echo $usersCount; ?></p>
             </div>
-
-            <div class="stat-box">
-                <h3>Models</h3>
-                <p id="models"><?php echo $modelsCount; ?></p>
-            </div>
-
         </div>
 
         <!-- Recent Predictions Section -->
@@ -69,35 +71,38 @@ $model_typeCount = $model_typeResult->fetch_assoc()['total_models'];
             <table id="predictions-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Size (sq ft)</th>
+                        <th>S.N</th>
+                        <th>Aana</th>
+                        <th>Bedroom</th>
+                        <th>Bathroom</th>
+                        <th>Floor</th>
+                        <th>Road</th>
                         <th>Price</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>2024-08-20</td>
-                        <td>Kathmandu</td>
-                        <td>1,200</td>
-                        <td>Nrs. 3050,000</td>
-                        <td><button onclick="deletePrediction(this)">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>2024-08-19</td>
-                        <td>Pokhara</td>
-                        <td>1,800</td>
-                        <td>Nrs. 450,0000</td>
-                        <td><button onclick="deletePrediction(this)">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>2024-08-18</td>
-                        <td>Lalitpur</td>
-                        <td>900</td>
-                        <td>Nrs. 250,0000</td>
-                        <td><button onclick="deletePrediction(this)">Delete</button></td>
-                    </tr>
+                <tbody id="predictions-body">
+                    <?php
+                    if (!empty($recentPredictions)) {
+                        $sn = 1; // For serial number
+                        foreach ($recentPredictions as $row) {
+                            echo "<tr>";
+                            echo "<td>" . $sn++ . "</td>"; // Increment serial number
+                            echo "<td>" . (isset($row["aana"]) ? $row["aana"] : 'N/A') . "</td>";
+                            echo "<td>" . (isset($row["bedroom"]) ? $row["bedroom"] : 'N/A') . "</td>";
+                            echo "<td>" . (isset($row["bathroom"]) ? $row["bathroom"] : 'N/A') . "</td>";
+                            echo "<td>" . (isset($row["floor"]) ? $row["floor"] : 'N/A') . "</td>";
+                            echo "<td>" . (isset($row["road"]) ? $row["road"] : 'N/A') . "</td>";
+                            echo "<td>Nrs. " . (isset($row["price"]) ? $row["price"] : 'N/A') . "</td>";
+                            echo "<td>" . (isset($row["date"]) ? $row["date"] : 'N/A') . "</td>";
+                            echo "<td><button onclick='deletePrediction(this)'>Delete</button></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='9'>No predictions found</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -123,12 +128,12 @@ $model_typeCount = $model_typeResult->fetch_assoc()['total_models'];
         function deletePrediction(button) {
             var row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
-            alert('Prediction deleted successfully!');
+            alert('Delete Prediction?');
         }
     </script>
 </body>
-
 </html>
+
 <?php
 $conn->close();
 ?>
