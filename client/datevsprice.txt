@@ -1,0 +1,47 @@
+// If the model type is 'analysis', prepare data for chart
+                $chart_data_sql = "SELECT date, price FROM predictions WHERE user_id = '" . mysqli_real_escape_string($conn, $user_id) . "'";
+                $chart_data_result = $conn->query($chart_data_sql);
+                
+                $dates = [];
+                $prices = [];
+
+                if ($chart_data_result && $chart_data_result->num_rows > 0) {
+                    while ($row = $chart_data_result->fetch_assoc()) {
+                        $dates[] = $row['date'];
+                        $prices[] = $row['price'];
+                    }
+                }
+
+                // Encode data for JavaScript
+                $dates_js = json_encode($dates);
+                $prices_js = json_encode($prices);
+                ?>
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <script>
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'line', // You can change this to 'bar', 'pie', etc.
+                        data: {
+                            labels: <?php echo $dates_js; ?>,
+                            datasets: [{
+                                label: 'Price Over Time',
+                                data: <?php echo $prices_js; ?>,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
+                <?php
+            }
+            ?>

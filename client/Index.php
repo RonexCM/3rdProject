@@ -180,7 +180,10 @@ if (isset($_POST['save'])) {
         </div>
     </div>
     <div  id="compareDiv" class="content hidden home">
-                    Compare
+    <h1 style="font-size: 25px;">Comparison of Models based on Best Score: </h1><br/>
+    <div class="imgContainer">
+            <img id="regressionImage" src="Image/compare.png" alt="Regression Plot">
+        </div>
     </div>
     <div  id="relationDiv" class="content home">
         <h1 style="font-size: 25px;">Relation of Each Independent Variable with Dependent Variable: </h1>
