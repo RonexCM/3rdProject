@@ -32,7 +32,7 @@ $result = $conn->query($sql);
     <div class="sidebar" id="sidebar">
         <h2>Admin Dashboard</h2>
         <ul>
-            <li><a href="Index.php">Dashboard</a></li>
+            <li><a href="index.php">Dashboard</a></li>
             <li><a href="prediction.php">Predictions</a></li>
             <li><a href="Userdetails.php" class="active">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>

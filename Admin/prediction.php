@@ -21,7 +21,7 @@ $result = $conn->query($sql);
     <div class="sidebar" id="sidebar">
         <h2>Admin Dashboard</h2>
         <ul>
-            <li><a href="Index.php">Dashboard</a></li>
+            <li><a href="index.php">Dashboard</a></li>
             <li><a href="prediction.php" class="active">Predictions</a></li>
             <li><a href="Usersdetails.php">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>

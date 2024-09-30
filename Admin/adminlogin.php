@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === $validEmail && $password === $validPassword) {
         $_SESSION['admin_logged_in'] = true;
 
-        header("Location: Index.php");
+        header("Location: index.php");
         exit();
     } else {
         $error = "Invalid email or password.";

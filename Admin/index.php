@@ -37,7 +37,7 @@ if ($recentPredictionsResult && $recentPredictionsResult->num_rows > 0) {
     <div class="sidebar" id="sidebar">
         <h2>Admin Dashboard</h2>
         <ul>
-            <li><a href="Index.php" class="active">Dashboard</a></li>
+            <li><a href="index.php" class="active">Dashboard</a></li>
             <li><a href="prediction.php">Predictions</a></li>
             <li><a href="Usersdetails.php">Users Details</a></li>
             <li><a href="logout.php">Logout</a></li>
