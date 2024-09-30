@@ -6,7 +6,7 @@ from sklearn.linear_model import Lasso, LinearRegression
 
 # Your existing preprocessing code
 
-df = pd.read_csv('Nepali_house_dataset.csv')
+df = pd.read_csv('model/Nepali_house_dataset.csv')
 
 df2 = df.drop(columns=['TITLE', 'BUILDUP AREA', 'FACING', 'BUILT YEAR', 'PARKING', 'AMENITIES',])
 df3 = df2.dropna()
