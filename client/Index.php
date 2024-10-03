@@ -121,14 +121,6 @@ if (isset($_POST['save'])) {
     <div class="container">
         <h2>Predict the Price</h2>
        
-
-        <!-- aana = float(request.form['aana'])
-    location = request.form['location']
-    bedroom = int(request.form['bedroom'])
-    bathroom = int(request.form['bathroom'])
-    floors = int(request.form['floors'])
-    parking = int(request.form['parking'])
-    road = float(request.form['road']) -->
     <form class="form" method="POST">
         <h2>Area (Aana)</h2>
         <input class="area" type="text" id="uiAana" class="floatLabel" name="Aana" placeholder="Enter the Area in Aana">

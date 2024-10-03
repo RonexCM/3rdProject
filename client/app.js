@@ -13,9 +13,39 @@ function onClickedEstimatePrice() {
     'input[name="model_type"]:checked'
   );
 
-  console.log(selectedModel.value);
   var estPrice = document.getElementById("uiEstimatedPrice");
   var location = document.getElementById("uiLocations");
+  if (
+    !aana.value ||
+    isNaN(parseFloat(aana.value)) ||
+    parseFloat(aana.value) < 2.5
+  ) {
+    return alert("Please enter a valid number for Aana (must be >= 2.5)");
+  }
+  if (
+    !bedroom.value ||
+    isNaN(parseInt(bedroom.value)) ||
+    parseInt(bedroom.value) < 1
+  ) {
+    return alert("Please enter a valid number of bedrooms (must be >= 1)");
+  }
+  if (!bath.value || isNaN(parseInt(bath.value)) || parseInt(bath.value) < 1) {
+    return alert("Please enter a valid number of bathrooms (must be >= 1)");
+  }
+  if (
+    !floor.value ||
+    isNaN(parseInt(floor.value)) ||
+    parseInt(floor.value) < 1
+  ) {
+    return alert("Please enter a valid number of floors (must be >= 1)");
+  }
+  if (
+    !road.value ||
+    isNaN(parseFloat(road.value)) ||
+    parseFloat(road.value) < 5
+  ) {
+    return alert("Please enter a valid road size in meters (must be >= 5)");
+  }
   var url = "http://127.0.0.1:5000/predict_home_price"; //Use this if you are NOT using nginx which is first 7 tutorials
   $.post(
     url,
